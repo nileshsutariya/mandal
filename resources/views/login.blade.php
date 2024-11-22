@@ -2,176 +2,116 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Attractive Login Page</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- All Library CSS -->
+    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/LineIcons.css')}}">
+    <link rel="stylesheet" href="{{asset('css/viewer.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/icofont.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/calendar.css')}}">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{asset('css/styles.css')}}">
+    <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="images/favicon.png">
+    <title>Mandal Management System</title>
     <style>
-        body {
-            background: linear-gradient(to right, #6a11cb, #2575fc);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .login-container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
-            max-width: 500px;
-            width: 100%;
-        }
-
-        .login-container h3 {
-            font-size: 2.5rem;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .form-control-icon {
-            position: relative;
-        }
-
-        .form-control-icon i {
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #aaa;
-        }
-
-        .form-control {
-
-            padding-left: 35px;
-        }
-
-        .form-control:focus {
-            background: rgba(255, 255, 255, 0.3);
-            outline: none;
-            box-shadow: none;
-            border: none;
-        }
-
-        .btn-custom {
-            background: linear-gradient(to right, #6a11cb, #2575fc);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
-            transition: all 0.3s ease-in-out;
-        }
-
-        .btn-custom:hover {
-            background: linear-gradient(to right, #2575fc, #6a11cb);
-            transform: scale(1.05);
-        }
-
-        .signup-link a {
-            color: #2575fc;
-            text-decoration: none;
-        }
-
         .signup-link a:hover {
             text-decoration: underline;
-        }
-
-        .error-message {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-            padding: 15px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            animation: slideIn 0.5s ease-in-out;
-        }
-
-        .error-message i {
-            font-size: 24px;
-            margin-right: 15px;
-        }
-
-        .error-message .message-content {
-            font-size: 16px;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .error-message button {
-            background-color: transparent;
-            border: none;
-            color: #721c24;
-            font-size: 18px;
-            cursor: pointer;
-            margin-left: auto;
-            transition: color 0.3s;
-        }
-
-        .error-message button:hover {
-            color: #f5c6cb;
         }
     </style>
 </head>
 
 <body>
-  
-    <div class="login-container">
-        @if($errors->any())
-     <div class="error-message">
-        <i class="fas fa-exclamation-triangle"></i>
-        <div class="message-content">
-            <strong>Error</strong><br>
-            @error('password')<span class="text-danger">{{ $message }}</span>@enderror
-            @error('mobile')<span class="text-danger">{{ $message }}</span>@enderror
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="d-table">
+            <div class="d-tablecell">
+                <span class="loader">
+                    <span class="loader-inner"></span>
+                </span>
+            </div>
         </div>
-        <button onclick="this.parentElement.style.display='none'"><i class="fas fa-times"></i></button>
     </div>
-    @endif
+   
+    <div class="auth-main-content auth-bg-image">
+        <div class="d-table">
+            <div class="d-tablecell">
+                <div class="auth-box">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <div class="form-left-content">
+                                <div class="auth-logo">
+                                    <img src="{{asset('images/large-logo.png')}}" alt="Logo">
+                                </div>
 
-        <h3>Login</h3>
-        <form action="{{ route('login.check') }}" method="post">
-        @csrf
-            <div class="mb-4 form-group">
-                <label for="mobile" class="form-label">Username</label>
-                <div class="form-control-icon">
-                    <i class="fas fa-envelope"></i>
-                    <input type="mobile" id="mobile" name="mobile" class="form-control" placeholder="Enter your Username">
+                                <div class="login-links">
+                                    <a class="fb" href="#">
+                                        <i data-feather="facebook" class="icon"></i>
+                                        Sign Up with Facebook
+                                    </a>
+                                    <a class="twi" href="#">
+                                        <i data-feather="twitter" class="icon"></i>
+                                        Sign Up with Twitter
+                                    </a>
+                                    <a class="ema" href="#">
+                                        <i data-feather="mail" class="icon"></i>
+                                        Sign Up with Email
+                                    </a>
+                                    <a class="linkd" href="#">
+                                        <i data-feather="linkedin" class="icon"></i>
+                                        Sign Up with Linkedin
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-content">
+                            @if($errors->any())
+                                    <div class="alert alert-danger">
+                                            @foreach($errors->all() as $error)
+                                                <li>
+                                                    {{ $error }}
+                                                </li>
+                                            @endforeach
+                                    </div>
+                                @endif 
+                                <h1 class="heading">Log In</h1>
+                                <form action="{{ route('login.check') }}" method="post">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label class="form-label">Username</label>
+                                        <input type="mobile" id="mobile" name="mobile" class="form-control"
+                                            placeholder="Enter your Username">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Password</label>
+                                        <input type="password" id="password" name="password" class="form-control"
+                                            placeholder="Enter your password">
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Log In</button>
+                                        <a class="fp-link" href="#">Forgot Password?</a>
+                                    </div>
+                                </form>
+                                <div class="text-center signup-link mt-2">
+                                    <p>Don't have an account? <a href="{{route('register')}}">Sign Up</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="mb-4 form-group">
-                <label for="password" class="form-label">Password</label>
-                <div class="form-control-icon">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" id="password" name="password" class="form-control"
-                        placeholder="Enter your password">
-                </div>
-            </div>
-            <button type="submit" class="btn btn-custom w-100">Login</button>
-        </form>
-        <div class="text-center signup-link mt-4">
-            <p>Don't have an account? <a href="{{route('register')}}">Sign Up</a></p>
         </div>
     </div>
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="{{asset('js/custom.js')}}"></script>
+
 </body>
 
 </html>

@@ -1,55 +1,109 @@
+<!-- Footer --></div>
+      <div class="flex-grow-1"></div>
+            <footer class="footer mt-1">
+                <p>Copyright © 2019 Plab. All rights reserved</p>
+            </footer>
+        </div>
+        <!-- End Main Content Wrapper -->
+
+        <!-- Theme Color customizer Right Modal -->
+        <div class="customizer-toggle" data-toggle="modal" data-target="#ThemeColorCustomizer">
+            <i data-feather="settings" class="spin icon mt-minus-2"></i>
+        </div>
+      
+        <div class="modal right color-customizer-modal fade" id="ThemeColorCustomizer">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title" id="myModalLabel2">Theme Color Customizer</h4>
+                    </div>
+    
+                    <div class="modal-body">
+                        <!-- Left SideMenu Color Switcher -->
+                        <div class="color-content">
+                            <h5>Left SideMenu Color</h5>
+                            <p class="mb-2">Change SideMenu background color</p>
+							<ul class="customize-sidemenu">
+								<li id="BGPrimary" class="bg_primary"></li>
+								<li id="BGPurpleIndigo" class="purple_indigo"></li>
+								<li id="BGPink" class="bg_pink"></li>
+								<li id="BGnNightBlue" class="bg_night_blue"></li>
+								<li id="BGIndigo" class="bg_indigo"></li>
+								<li id="BGSuccess" class="bg_success"></li>
+								<li id="BGSecondary" class="bg_secondary"></li>
+								<li id="BGPurple" class="bg_purple"></li>
+								<li id="BGGray" class="bg_gray"></li>
+								<li id="BGDanger" class="bg_danger"></li>
+								<li id="BGGrayBlue" class="bg_gray_blue"></li>
+								<li id="BGGreen" class="bg_green"></li>
+								<li id="BGWarning" class="bg_warning"></li>
+								<li id="BGDeepPurple" class="bg_deep_purple"></li>
+							</ul>
+                        </div>
+
+                        <!-- Left SideMenu Folded Menu -->
+                        <div class="color-content">
+                            <h5>Folded Menu</h5>
+                            <p>Toggle Folded Menu</p>
+                             
+                            <div class="side-menu-switch">
+                                <label class="switch">
+                                    <input type="checkbox" class="light">
+                                    <span class="slider round folded-menu"></span>
+                                </label> 
+                            </div>
+                        </div>
+
+                        <!-- Card Shadow ide & Show -->
+                        <div class="color-content">
+                            <h5>Card Shadow</h5>
+                            <p>Show &amp; Hide Card Shadow</p>
+                                
+                            <div class="side-menu-switch">
+                                <label class="switch">
+                                    <input type="checkbox" class="light">
+                                    <span class="slider round card-shadow"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Theme Color customizer -->
+ 
 
 
-</div>
-  <!-- /.content-wrapper -->
-  
-  <footer class="main-footer">
-    <strong>Copyright &copy; 2024 <a href="#">OnlineWebView</a>.</strong>
-    All rights reserved.
-    <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.2.0
-    </div>
-  </footer>
-
-<!-- jQuery -->
-<!-- jQuery UI 1.11.4 -->
-<!-- <script src="{{asset('plugins/jquery-ui/jquery-ui.min.js')}}"></script> -->
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-
-<!-- Bootstrap 4 -->
-<script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-<!-- ChartJS -->
-<script src="{{asset('plugins/chart.js/Chart.min.js')}}"></script>
-<!-- Sparkline -->
-<script src="{{asset('plugins/sparklines/sparkline.js')}}"></script>
-<!-- jQuery Knob Chart -->
-<script src="{{asset('plugins/jquery-knob/jquery.knob.min.js')}}"></script>
-<!-- daterangepicker -->
-<script src="{{asset('plugins/moment/moment.min.js')}}"></script>
-<script src="{{asset('plugins/daterangepicker/daterangepicker.js')}}"></script>
-<!-- Tempusdominus Bootstrap 4 -->
-<script src="{{asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
-<!-- Summernote -->
-<script src="{{asset('plugins/summernote/summernote-bs4.min.js')}}"></script>
-<!-- overlayScrollbars -->
-<script src="{{asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
-<!-- AdminLTE App -->
-<script src="{{asset('dist/js/adminlte.js')}}"></script>
-<!-- AdminLTE for demo purposes -->
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<!-- <script src="{{asset('dist/js/pages/dashboard.js')}}"></script> -->
-<script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
-<script src="{{asset('plugins/jszip/jszip.min.js')}}"></script>
-<script src="{{asset('plugins/pdfmake/pdfmake.min.js')}}"></script>
-<script src="{{asset('plugins/pdfmake/vfs_fonts.js')}}"></script>
-<script src="{{asset('plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
-
-</body>
-</html>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script data-cfasync="false" src="{{ asset('js/email-decode.min.js') }}"></script>
+        <script src="{{ asset('js/popper.min.js') }}"></script>
+        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+        <!-- Feather Icon JS -->
+        <script src="{{ asset('js/feather.min.js') }}"></script>
+        <!-- Gllery viewer JS -->
+        <script src="{{ asset('js/viewer.min.js') }}"></script>
+		<!-- Calendar JS -->
+        <script src="{{ asset('js/moment-with-locales.js') }}"></script>
+        <!-- <script src="{{ asset('js/calendar.js') }}"></script> -->
+        <!-- ApexCharts JS -->
+        <!-- <script src="{{ asset('js/apexcharts.min.js') }}"></script>
+        <script src="{{ asset('js/apexcharts-stock-prices.js') }}"></script>
+        <script src="{{ asset('js/apex-line-charts.js') }}"></script>
+        <script src="{{ asset('js/apex-area-charts.js') }}"></script>
+        <script src="{{ asset('js/apex-bar-charts.js') }}"></script>
+        <script src="{{ asset('js/apex-mixed-charts.js') }}"></script>
+        <script src="{{ asset('js/apex-pie-donuts-charts.js') }}"></script>
+        <script src="{{ asset('js/sales-by-countries.js') }}"></script>
+        <script src="{{ asset('js/month-sales-statistics.js') }}"></script>
+        <script src="{{ asset('js/order-summary.js') }}"></script>
+        <script src="{{ asset('js/visitors-overview.js') }}"></script>
+        <script src="{{ asset('js/leads-stats.js') }}"></script>
+        <script src="{{ asset('js/apex-column-charts.js') }}"></script> -->
+        <!-- Custom chart JS -->
+        <!-- <script src="{{ asset('js/custom-chart.    js') }}"></script> -->
+        <!-- Custom JS -->
+        <script src="{{ asset('js/custom.js') }}"></script>
+    
+</body></html>

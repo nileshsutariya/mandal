@@ -2,121 +2,137 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Page</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- All Library CSS -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{asset('css/LineIcons.css') }}">
+    <link rel="stylesheet" href="{{asset('css/viewer.min.css') }}">
+    <link rel="stylesheet" href="{{asset('css/icofont.min.css') }}">
+    <link rel="stylesheet" href="{{asset('css/calendar.css') }}">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{asset('css/styles.css') }}">
+    <link rel="stylesheet" href="{{asset('css/responsive.css') }}">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{asset('favicons/img-favicon.png')}}">
+    <title>Mandal Management System</title>
     <style>
-        body {
-            background: linear-gradient(to right, #6a11cb, #2575fc);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .registration-container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
-            max-width: 500px;
-            width: 100%;
-        }
-
-        .registration-container h3 {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #333;
-            text-align: center;
-        }
-
-        .form-control-icon {
-            position: relative;
-        }
-
-        .form-control-icon i {
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #aaa;
-        }
-
-        .form-control {
-            padding-left: 35px;
-        }
-
-        .btn-custom {
-            background: linear-gradient(to right, #6a11cb, #2575fc);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
-            transition: all 0.3s ease-in-out;
-        }
-
-        .btn-custom:hover {
-            background-color: #2575fc;
-        }
-
-        .signin-link a {
-            color: #6a11cb;
-            text-decoration: none;
-        }
-
-        .signin-link a:hover {
+           .signin-link a:hover {
             text-decoration: underline;
         }
     </style>
 </head>
 
 <body>
-    <div class="registration-container">
-        <h3>Register</h3>
-        <form  action="{{ route('user.store') }}" method="post">
-        @csrf
-            <div class="mb-4 form-group">
-                <label for="name" class="form-label">Full Name</label>
-                <div class="form-control-icon">
-                    <i class="fas fa-user"></i>
-                    <input type="text" id="name" name="name" class="form-control" placeholder="Enter your full name">
-                </div>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="d-table">
+            <div class="d-tablecell">
+                <span class="loader">
+                    <span class="loader-inner"></span>
+                </span>
             </div>
-            <div class="mb-4 form-group">
-                <label for="mobile" class="form-label">Mobile</label>
-                <div class="form-control-icon">
-                    <i class="fas fa-phone"></i>
-                    <input type="text" id="mobile" name="mobile" class="form-control" placeholder="Enter your mobile number" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');">
-                </div>
-            </div>
-            <div class="mb-4 form-group">
-                <label for="password" class="form-label">Password</label>
-                <div class="form-control-icon">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password">
-                </div>
-            </div>
-            <div class="mb-4 form-group">
-                <label for="confirm-password" class="form-label">Confirm Password</label>
-                <div class="form-control-icon">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" id="confirm-password" name="confirmpassword" class="form-control"
-                        placeholder="Confirm your password">
-                </div>
-            </div>
-            <button type="submit" class="btn btn-custom w-100">Register</button>
-        </form>
-        <div class="text-center signin-link mt-4">
-            <p>Already have an account? <a href="{{route('login')}}">Sign In</a></p>
         </div>
     </div>
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- End Preloader -->
+
+    <!-- Signup Area -->
+    <div class="auth-main-content auth-bg-image">
+        <div class="d-table">
+            <div class="d-tablecell">
+                <div class="auth-box">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <div class="form-left-content">
+                                <div class="auth-logo">
+                                    <img src="{{asset('images/large-logo.png')}}" alt="Logo">
+                                </div>
+
+                                <div class="login-links">
+                                    <a class="fb" href="#">
+                                        <i data-feather="facebook" class="icon"></i>
+                                        Sign Up with Facebook
+                                    </a>
+                                    <a class="twi" href="#">
+                                        <i data-feather="twitter" class="icon"></i>
+                                        Sign Up with Twitter
+                                    </a>
+                                    <a class="ema" href="#">
+                                        <i data-feather="mail" class="icon"></i>
+                                        Sign Up with Email
+                                    </a>
+                                    <a class="linkd" href="#">
+                                        <i data-feather="linkedin" class="icon"></i>
+                                        Sign Up with Linkedin
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-content">
+                                <h1 class="heading">Sign Up</h1>
+                                <form class="" action="{{route('user.store')}}" method="post">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label>Name</label>
+                                        <input type="text" class="form-control" id="name" name="name"
+                                            placeholder="Enter your name">
+                                        @error('name')
+                                            <span class="text-danger">
+                                                {{$message}}
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Mobile Number</label>
+                                        <input type="mobile" class="form-control" id="mobile" name="mobile"
+                                            placeholder="Enter your Mobile number">
+                                        @error('mobile')
+                                            <span class="text-danger">
+                                                {{$message}}
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Password</label>
+                                        <input type="password" class="form-control" id="password" name="password"
+                                            placeholder="Enter Password">
+                                        @error('password')
+                                            <span class="text-danger">
+                                                {{$message}}
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Confirm Password</label>
+                                        <input type="password" class="form-control" id="confirmpassword"
+                                            name="confirmpassword" placeholder="Please Re-Enter Your Password">
+                                        @error('confirmpassword')
+                                            <span class="text-danger">
+                                                {{$message}}
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Sign Up</button>
+                                    </div>
+                                </form>
+                                <div class="text-center signin-link mt-3">
+                                    <p>Already have an account? <a href="{{route('login')}}">Sign In</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{asset('js/custom.js')}}"></script>
 </body>
 
 </html>

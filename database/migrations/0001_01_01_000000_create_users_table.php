@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('gender')->nullable();
             $table->string('address')->charset('utf8mb4')->collation('utf8mb4_unicode_ci')->nullable();
             $table->date('date_of_birth')->nullable();
+            $table->text('image')->nullable();
             $table->boolean('status')->default(1)->comment('0 is Deactive , 1 is Active');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

@@ -3,13 +3,22 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MandalController;
 
 Route::get('/', function () {
-    return view('login');
+    return redirect()->route('login');
 });
-Route::get('/login',[LoginController::class,'index'])->name('login');
-Route::post('/login-check',[LoginController::class,'login'])->name('login.check');
-Route::get('/register',[UserController::class,'signup'])->name('register');
-Route::post('/user/store',[UserController::class,'store'])->name('user.store');
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/login-check', [LoginController::class, 'login'])->name('login.check');
+Route::get('/register', [UserController::class, 'signup'])->name('register');
+Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
+Route::middleware(['users'])->group(function () {
+    Route::get('/dashboard', [LoginController::class, 'dashboard'])->name('dashboard');
+    Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/dashboard',[LoginController::class,'dashboard'])->name('dashboard');
+    Route::get('/user/profile', [UserController::class, 'profile'])->name('user.profile');
+    Route::get('/user/edit', [UserController::class, 'edit'])->name('user.edit');
+    Route::post('/user/update', [UserController::class, 'update'])->name('user.update');
+    
+    Route::get('/mandal/list', [MandalController::class, 'index'])->name('mandal.list');
+});

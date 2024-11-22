@@ -11,6 +11,9 @@ class LoginController extends Controller
 {
     public function index()
     {
+        if(Auth::check()){
+            return redirect()->route('dashboard');                
+        }
         return view('login');
     }
     public function login(Request $request)
@@ -30,7 +33,13 @@ class LoginController extends Controller
         }
     }
     public function dashboard(){
-        return view('dashboard');
+        $user = User::find(Auth::id());
+        return view('dashboard' ,compact('user'));
+    }
+    public function logout(){
+        Auth::logout();
+        return redirect()->route('login');
+
     }
 }
 
