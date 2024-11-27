@@ -1,4 +1,9 @@
 @include('layouts.header')
+<style>
+    .form-label{
+        font-weight: bold;
+    }
+</style>
 <div class="main-content-header">
     <h1>Profile</h1>
     <ol class="breadcrumb">
@@ -6,228 +11,154 @@
             <a href="dashboard-sales.html">Dashboard</a>
         </li>
         <li class="breadcrumb-item active">
-            <span class="active">Profile</span>
+            <span class="active">Profile Settings</span>
         </li>
     </ol>
 </div>
-<div class="row">
-    <div class="col-lg-12">
-        <div class="profile-header mb-30">
-            <img src="img/user/1.jpg" alt="Profle" class="rounded-circle">
-            <h3 class="name mt-3">Aaron Rossi</h3>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-                scrambled it to make a type specimen book.</p>
-            <div class="profile-stats">
-                <a href="#">
-                    <strong>587</strong>
-                    Posts
-                </a>
-                <a href="#">
-                    <strong>963</strong>
-                    Following
-                </a>
-                <a href="#">
-                    <strong>576</strong>
-                    Followers
-                </a>
-            </div>
-        </div>
-    </div>
 
-    <div class="col-lg-3">
+<div class="row">
+    <div class="col-lg-4">
         <div class="profile-left-content">
             <div class="card mb-30">
                 <div class="card-body">
                     <div class="card-header">
-                        <h5 class="card-title">Info</h5>
+                        <h5 class="card-title">Account Profile</h5>
                     </div>
-
-                    <ul class="info">
-                        <li>
-                            <i data-feather="map-pin" class="icon"></i>
-                            Location: Canada
-                        </li>
-                        <li>
-                            <i data-feather="edit" class="icon"></i>
-                            Language: English
-                        </li>
-                        <li>
-                            <i data-feather="calendar" class="icon"></i>
-                            Joined: Joined March 2019
-                        </li>
-                        <li>
-                            <i data-feather="calendar" class="icon"></i>
-                            Birthday: Born March 2, 1995
-                        </li>
-                        <li>
-                            <i data-feather="phone" class="icon"></i>
-                            Phone: +0 (123) 456 7892
-                        </li>
-                        <li>
-                            <i data-feather="mail" class="icon"></i>
-                            Email: <a href="cdn-cgi/l/email-protection" class="__cf_email__"
-                                data-cfemail="85e0fde4e8f5e9e0c5e2e8e4ece9abe6eae8">[email&#160;protected]</a>
-                        </li>
-                    </ul>
+                        <div class="profile-header mb-30">
+                        <form action="{{ route('user.update') }}" method="post" enctype="multipart/form-data">
+                            @csrf
+                                <img src="{{asset('imageuploaded/' . $user->image)}}" alt="Profile"
+                                    style="width: 100px; height:100px;" class="rounded-circle"><br>
+                                <span id="fileName" class="text-muted"></span><br>
+                                <input type="file" id="imageInput" class="form-control form-control-file" name="image" style="display: none;" onchange="showFileName()">
+                                <a href="#" id="uploadLink" class="btn btn-link">Change profile picture</a>
+                                <h3 class="name mt-3">
+                                    {{$user->name}}
+                                </h3>
+                                <p>
+                                {{$user->address}}
+                                </p>
+                        </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="col-lg-6">
-        <div class="profile-middle-content mb-30">
-            <div class="post-card">
-                <div class="media">
-                    <img src="img/user/1.jpg" alt="User" class="mr-3 rounded-circle" width="50" height="50">
-                    <div class="media-body">
-                        <h5><a href="#">There are many variations of passages of Lorem Ipsum</a></h5>
-                        <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin
-                            commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p>
-                        <a href="#">
-                            <img src="img/post/post-img.jpg" alt="Post Image">
-                        </a>
-                        <div class="feed-back mt-3">
-                            <a href="#">
-                                <i data-feather="message-square" class="icon"></i>
-                                897
-                            </a>
-                            <a href="#">
-                                <i data-feather="thumbs-up" class="icon"></i>
-                                897
-                            </a>
-                            <a href="#">
-                                <i data-feather="share-2" class="icon"></i>
-                                897
-                            </a>
+    <div class="col-lg-8">
+        <div class="profile-settings-form mb-30">
+            @if($errors->any())
+                <div class="alert alert-danger">
+                        @foreach($errors->all() as $error)
+                            <li>
+                                {{ $error }}
+                            </li>
+                        @endforeach
+                </div>
+            @endif 
+                <div class="row">
+                    <div class="col-md">
+                        <input type="hidden" class="form-control" name="id" value="{{$user->id}}">
+                        <div class="form-group">
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control" name="name" value="{{$user->name}}">
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="form-group">
+                            <label class="form-label">Mobile No.</label>
+                            <input type="text" class="form-control" name="mobile" value="{{$user->mobile}}"
+                                oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');">
                         </div>
                     </div>
                 </div>
-            </div>
+                <div class="row">
+                    <div class="col-md">
+                        <div class="form-group">
+                            <label class="form-label">Pancard No.</label>
+                            <input type="text" class="form-control" name="pancard" value="{{$user->pancard_no}}">
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="form-group">
+                            <label class="form-label">Adhar card No.</label>
+                            <input type="text" class="form-control" name="adharcard" value="{{$user->adharcard_no}}">
+                        </div>
+                    </div>
+                </div>
 
-            <div class="post-card">
-                <div class="media">
-                    <img src="img/user/2.jpg" alt="User" class="mr-3 rounded-circle" width="50" height="50">
-                    <div class="media-body">
-                        <h5><a href="#">There are many variations of passages of Lorem Ipsum</a></h5>
-                        <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin
-                            commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p>
-                        <a href="#">
-                            <img src="img/post/post-img2.jpg" alt="Post Image">
-                        </a>
-                        <div class="feed-back mt-3">
-                            <a href="#">
-                                <i data-feather="message-square" class="icon"></i>
-                                897
-                            </a>
-                            <a href="#">
-                                <i data-feather="thumbs-up" class="icon"></i>
-                                897
-                            </a>
-                            <a href="#">
-                                <i data-feather="share-2" class="icon"></i>
-                                897
-                            </a>
+                <div class="row">
+                    <div class="col-md">
+                        <div class="form-group">
+                            <label class="form-label">Birthday Date</label>
+                            <input type="date" class="form-control" name="dob" value="{{$user->date_of_birth}}">
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="form-group">
+                            <label class="form-label">Address</label>
+                            <textarea rows="3" class="form-control" name="address">{{$user->address}}</textarea>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="post-card">
-                <div class="media">
-                    <img src="img/user/3.jpg" alt="User" class="mr-3 rounded-circle" width="50" height="50">
-                    <div class="media-body">
-                        <h5><a href="#">There are many variations of passages of Lorem Ipsum</a></h5>
-                        <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin
-                            commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p>
-                        <a href="#">
-                            <img src="img/post/post-img3.jpg" alt="Post Image">
-                        </a>
-                        <div class="feed-back mt-3">
-                            <a href="#">
-                                <i data-feather="message-square" class="icon"></i>
-                                897
-                            </a>
-                            <a href="#">
-                                <i data-feather="thumbs-up" class="icon"></i>
-                                897
-                            </a>
-                            <a href="#">
-                                <i data-feather="share-2" class="icon"></i>
-                                897
-                            </a>
+                <div class="form-group">
+                    <label class="form-label ">Gender</label>
+                    <div class="row ">
+                        <div class="col-sm ">
+                            <input class="form-check-input col-sm-3 pt-0 " type="radio" name="gender" id="gridRadios1"
+                                value="male" {{ $user->gender == 'male' ? 'checked' : '' }}>
+                            <label class="form-check-label col-sm-9 pt-0" for="gridRadios1">
+                                Male
+                            </label>
+                        </div>
+                        <div class="col-sm">
+                            <input class="form-check-input" type="radio" name="gender" id="gridRadios2" value="female"
+                                {{ $user->gender == 'female' ? 'checked' : '' }}>
+                            <label class="form-check-label" for="gridRadios2">
+                                Female
+                            </label>
+                        </div>
+                        <div class="col-sm">
+                            <input class="form-check-input" type="radio" name="gender" id="gridRadios3" value="other" {{ $user->gender == 'other' ? 'checked' : '' }}>
+                            <label class="form-check-label" for="gridRadios3">
+                                Other
+                            </label>
                         </div>
                     </div>
                 </div>
-            </div>
+                <!-- </div> -->
+                <div class="row">
+                    <div class="col-md">
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" name="password" placeholder="Enter new password">
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="form-group">
+                            <label class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" name="confirmpassword" placeholder="Confirm Your password">
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                </div>
+            </form>
         </div>
     </div>
+    <script>
+    // Trigger the hidden file input when the link is clicked
+    document.getElementById('uploadLink').addEventListener('click', function(e) {
+        e.preventDefault(); // Prevent default link behavior
+        document.getElementById('imageInput').click();
+    });
 
-    <div class="col-lg-3">
-        <div class="profile-right-content">
-            <div class="card mb-30">
-                <div class="card-body">
-                    <div class="card-header">
-                        <h5 class="card-title">Connect</h5>
-                    </div>
-
-                    <div class="connecting-list">
-                        <div class="media">
-                            <a href="#">
-                                <img src="img/user/1.jpg" alt="User" class="mr-2 rounded-circle" width="35"
-                                    height="35">
-                            </a>
-                            <div class="media-body">
-                                <h5><a href="#">Amber Gibs</a></h5>
-                                <button type="button" class="btn btn-outline-primary rounded">Follow</button>
-                            </div>
-                        </div>
-                        <div class="media">
-                            <a href="#">
-                                <img src="img/user/2.jpg" alt="User" class="mr-2 rounded-circle" width="35"
-                                    height="35">
-                            </a>
-                            <div class="media-body">
-                                <h5><a href="#">Carl Roland</a></h5>
-                                <button type="button" class="btn btn-outline-primary rounded">Follow</button>
-                            </div>
-                        </div>
-                        <div class="media">
-                            <a href="#">
-                                <img src="img/user/3.jpg" alt="User" class="mr-2 rounded-circle" width="35"
-                                    height="35">
-                            </a>
-                            <div class="media-body">
-                                <h5><a href="#">Paul Wilson</a></h5>
-                                <button type="button" class="btn btn-outline-primary rounded">Follow</button>
-                            </div>
-                        </div>
-                        <div class="media">
-                            <a href="#">
-                                <img src="img/user/4.jpg" alt="User" class="mr-2 rounded-circle" width="35"
-                                    height="35">
-                            </a>
-                            <div class="media-body">
-                                <h5><a href="#">Alice Jenkins</a></h5>
-                                <button type="button" class="btn btn-outline-primary rounded">Follow</button>
-                            </div>
-                        </div>
-                        <div class="media">
-                            <a href="#">
-                                <img src="img/user/5.jpg" alt="User" class="mr-2 rounded-circle" width="35"
-                                    height="35">
-                            </a>
-                            <div class="media-body">
-                                <h5><a href="#">Lauren Cox</a></h5>
-                                <button type="button" class="btn btn-outline-primary rounded">Follow</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@include('layouts.footer')
-      
-         
+    // Display the selected file name
+    function showFileName() {
+        const fileInput = document.getElementById('imageInput');
+        const fileName = fileInput.files.length > 0 ? fileInput.files[0].name : 'No file selected';
+        document.getElementById('fileName').textContent = fileName;
+    }
+</script>
+    @include('layouts.footer')

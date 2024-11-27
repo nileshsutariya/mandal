@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('user_role');
-            $table->string('defalult_manager');
+            $table->boolean('defalult_manager')->default(0)->comment('0 is Deactive , 1 is Active');
             $table->timestamps();
         });
     }

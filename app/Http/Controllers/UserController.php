@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Mandal_master;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -40,7 +42,7 @@ class UserController extends Controller
     public function edit()
     {
         $user = User::find(Auth::id());
-        return view('user.useredit', compact('user'));
+        return view('user.profile', compact('user'));
     }
     public function update(Request $request)
     {
@@ -51,11 +53,11 @@ class UserController extends Controller
         }
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'mobile' => 'required|unique:users,mobile'.$request->id,
+            'mobile' => 'required|unique:users,mobile,' . $request->id,
         ])->validate();
 
         print_r($request->all());
-        $user = User::find($request->id); 
+        $user = User::find($request->id);
         $user->name = $request->name;
         $user->date_of_birth = $request->dob;
         $user->gender = $request->gender;
@@ -68,19 +70,17 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
         }
         $image = $request->file('image');
-        if($image){
+        if ($image) {
             $imagename = $image->getClientOriginalName();
             $imagepath = 'public/imageuploaded/';
             $image->move($imagepath, $imagename);
-    
+
             $user->image = $imagename;
         }
         $user->status = 1;
         $user->save();
         $url = $request->url();
-            return redirect()->route('dashboard');
+        return redirect()->route('user.edit');
     }
-    public function profile(){
-        return view('user.profile');
-    }
+
 }

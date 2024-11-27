@@ -17,7 +17,9 @@ return new class extends Migration
             $table->string('unique_code');
             $table->string('installment_amount');
             $table->string('interest_rate');
-            $table->string('tennert');
+            $table->string('tenert');
+            $table->text('logo')->nullable();
+            $table->boolean('status')->default(1)->comment('0 is Deactive , 1 is Active');
             $table->timestamps();
         });
     }

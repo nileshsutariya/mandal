@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MandalController;
+use App\Http\Controllers\MandalWiseUserController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -16,9 +17,13 @@ Route::middleware(['users'])->group(function () {
     Route::get('/dashboard', [LoginController::class, 'dashboard'])->name('dashboard');
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
-    Route::get('/user/profile', [UserController::class, 'profile'])->name('user.profile');
-    Route::get('/user/edit', [UserController::class, 'edit'])->name('user.edit');
+    Route::get('/user/profile', [UserController::class, 'edit'])->name('user.edit');
     Route::post('/user/update', [UserController::class, 'update'])->name('user.update');
     
     Route::get('/mandal/list', [MandalController::class, 'index'])->name('mandal.list');
+    Route::get('/mandal/details', [MandalController::class, 'mandaldetails'])->name('mandal.details');
+    Route::post('/mandal/store', [MandalController::class, 'store'])->name('mandal.store');
+    
+    Route::post('/mandalwiseuser/store', [MandalWiseUserController::class, 'store'])->name('mandalwiseuser.store');
+    Route::get('/switchaccount', [LoginController::class, 'switchaccount'])->name('switchaccount');
 });
