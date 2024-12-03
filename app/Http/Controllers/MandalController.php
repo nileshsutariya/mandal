@@ -46,26 +46,40 @@ class MandalController extends Controller
     }
     public function mandaldetails(Request $request)
     {
-        // $mandal = Mandal_master::find($request->id);
-        // $member = Mandal_wise_user::where('mandal_id', $request->id)
-        //     ->leftJoin('users', 'mandal_wise_user.user_id', '=', 'users.id')
-        //     ->select('mandal_wise_user.*', 'users.*')
-        //     ->get()
-        //     ->sortBy(function ($user) {
+        // if($request->ajax()){
+        //     $details = Mandal_wise_user::where('mandal_id', $request->id)
+        //         ->leftJoin('users', 'mandal_wise_user.user_id', '=', 'users.id')
+        //         ->select('mandal_wise_user.*', '    .*')
+        //         ->get();
+    
+        //     $sortedDetails = $details->sortBy(function ($user) {
         //         return $user->user_role === 'manager' ? 0 : 1;
-        //     });
-        // $memberUserIds = $member->pluck('user_id');
-        // $user = User::whereNotIn('id', $memberUserIds)->get();
-        // return view('mandal.details', compact('mandal', 'member', 'user'));
-        
-         $details = Mandal_wise_user::where('mandal_id', $request->id)
+        //     })->values();
+        //     foreach($details as $key =>$value){
+        //         $detailscount[$key]= $details->count(); 
+        //     }
+        //     $mandal=Mandal_master::where('id', $request->id)->first(); 
+        //     return response()->json([
+        //         'details' => $details,
+        //         'count' => $detailscount,
+        //         'mandal' => $mandal,
+        //     ]);
+        // }else{
+            // print_r($request->id);die;
+        $mandal = Mandal_master::find($request->id);
+        $member = Mandal_wise_user::where('mandal_id', $request->id)
             ->leftJoin('users', 'mandal_wise_user.user_id', '=', 'users.id')
             ->select('mandal_wise_user.*', 'users.*')
             ->get()
             ->sortBy(function ($user) {
-                return $user->user_role == 'manager' ? 0 : 1;
+                return $user->user_role === 'manager' ? 0 : 1;
             });
-     
-        return response()->json($details);
+        $memberUserIds = $member->pluck('user_id');
+        $user = User::whereNotIn('id', $memberUserIds)->get();
+        $role = $member->firstWhere('user_id', Auth::id()); 
+        // print_r($button);die;
+        return view('mandal.details', compact('mandal', 'member', 'user','role'));
+        // }
+
     }
 }

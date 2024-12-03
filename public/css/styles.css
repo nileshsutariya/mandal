@@ -2305,10 +2305,12 @@ form .form-group {
 .card {
   border-radius: 4px;
   border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+
 .card .card-body {
-  padding: 25px;
+  padding: 18px;
 }
 
 .card .card-header {
@@ -5421,4 +5423,26 @@ textarea.form-control {
 .timeline .timeline-list p {
   margin: 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*# sourceMappingURL=styles.css.map */

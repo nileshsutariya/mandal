@@ -6,8 +6,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <!-- <meta http-equiv="refresh" content="20"> -->
+    <!-- <meta http-equiv="refresh" content="10"> -->
     <!-- All Library CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/LineIcons.css') }}">
     <link rel="stylesheet" href="{{ asset('css/viewer.min.css') }}">
@@ -75,10 +76,11 @@
                     <div class="dropdown-menu">
                         @foreach ($mandals as $mandal)
                             <a class="dropdown-item" href="{{ route('switchaccount', ['id' => $mandal->id]) }}">
-                                <i data-feather="user" class="icon"></i>
+                                <img src="{{asset('imageuploaded/' . $mandal->logo)}}"class="rounded-circle p-0" style="height: 25px; width: 25px;">
                                 {{$mandal->mandal_name}}
                             </a>
                         @endforeach
+                        <hr>
                         <a class="dropdown-item" href="{{route('user.edit')}}">
                             <img src="{{asset('imageuploaded/' . $user->image)}}" class="rounded-circle p-0"
                                 style="height: 25px; width: 25px;">

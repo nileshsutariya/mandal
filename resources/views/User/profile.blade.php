@@ -28,7 +28,7 @@
                         <form action="{{ route('user.update') }}" method="post" enctype="multipart/form-data">
                             @csrf
                                 <img src="{{asset('imageuploaded/' . $user->image)}}" alt="Profile"
-                                    style="width: 100px; height:100px;" class="rounded-circle"><br>
+                                    style="width: 100px; height:100px;" class="rounded-circle">
                                 <span id="fileName" class="text-muted"></span><br>
                                 <input type="file" id="imageInput" class="form-control form-control-file" name="image" style="display: none;" onchange="showFileName()">
                                 <a href="#" id="uploadLink" class="btn btn-link">Change profile picture</a>
@@ -126,7 +126,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- </div> -->
                 <div class="row">
                     <div class="col-md">
                         <div class="form-group">
@@ -148,9 +147,8 @@
         </div>
     </div>
     <script>
-    // Trigger the hidden file input when the link is clicked
     document.getElementById('uploadLink').addEventListener('click', function(e) {
-        e.preventDefault(); // Prevent default link behavior
+        e.preventDefault(); 
         document.getElementById('imageInput').click();
     });
 

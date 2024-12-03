@@ -12,19 +12,29 @@ class MandalWiseUserController extends Controller
     public function store(Request $request)
     {
 
-        $validated = $request->validate([
-            'mandalid' => 'required',
-            'userid' => 'required',
-            'role' => 'required',
-        ]);
+        $validator = Validator::make($request->all(), [
+            'mandalid' => 'required|integer',
+            'userid' => 'required|integer',
+            'role' => 'required|string',
+        ])->validate();
 
-        print_r($request->all());
         $mandal = new Mandal_wise_user;
         $mandal->user_id = $request->userid;
         $mandal->mandal_id = $request->mandalid;
         $mandal->user_role = $request->role;
-        $mandal->default_manager =$request->manager== 'on' ? 1 : 0;
+        if ($mandal->user_role == "member") {
+            $mandal->default_manager = $request->manager == 'on' ? 1 : 0;
+        } elseif ($mandal->user_role == "manager") {
+            $mandal->default_manager = 0;
+        }
+        // print_r($mandal);die;
         $mandal->save();
-        
+
+        $member = Mandal_wise_user::where('mandal_id', $request->mandalid)
+            ->leftJoin('users', 'mandal_wise_user.user_id', '=', 'users.id')
+            ->select('mandal_wise_user.user_role as role', 'users.*')
+            ->get();
+        return response()->json($member);
+
     }
 }

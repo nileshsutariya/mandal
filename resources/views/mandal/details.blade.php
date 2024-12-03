@@ -82,20 +82,20 @@
                     <div class="card-title mb-0">
                         <p class="mb-0">Member of Mandal</p>
                     </div>
-                    <button type="button" class="btn btn-success rounded">Add new member</button>
+                    @if ($role->user_role=='manager')
+                    <button type="button" class="btn btn-success rounded" id="add-new-member" data-toggle="modal"
+                        data-target="#mandalmodal">Add new member</button>
+                    @endif
                 </div>
-                <div class="row">
+                <div class="row memberlist">
                     @foreach ($member as $value)
                         <!-- Profile Card 1 -->
-                        <div class="col-md-2 mb-3">
+                        <div class="col-lg-2 col-md-3 col-sm-4 mb-3 members">
                             <div class="card profile-card shadow-lg">
                                 <div class="card-body text-center">
                                     <div class="position-relative">
                                         <img class="rounded-circle" src="{{asset('imageuploaded/' . $value->image)}}"
                                             width="70" height="70" />
-                                        <div class="position-absolute" style="top: 10px; right: 10px; color: gray;">
-                                            <i class="fas fa-pen"></i>
-                                        </div>
                                     </div>
                                     <p class="mt-4 font-weight-bold" style="font-size: 20px;">{{$value->name}}</p>
                                     <p class="text-muted">{{$value->user_role}}</p>
@@ -104,7 +104,7 @@
                             </div>
                         </div>
                     @endforeach
-                    <div class="col-md-2 mb-3" id="add-new-member" data-toggle="modal" data-target="#mandalmodal">
+                    <!-- <div class="col-md-2 mb-3" id="add-new-member" data-toggle="modal" data-target="#mandalmodal">
                         <div class="card profile-card shadow-lg" style="height: 252px;">
                             <div class="card-body text-center">
                                 <div class="text-primary display-3 mt-4">
@@ -118,7 +118,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
             </div>
@@ -132,7 +132,7 @@
     <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
+                <h5 class="modal-title">Add New Member</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -142,6 +142,7 @@
                 <div id="error" class="alert alert-danger mt-3" role="alert" style="display: none;"></div>
 
                 <form>
+                    <!-- #region -->
                     <input type="hidden" value="{{$mandal->id}}" name="mandalid">
                     <div class="row">
                         <div class="col-md">
@@ -195,30 +196,46 @@
 
 
 <script>
-    document.getElementById('role').addEventListener('change', function () {
-        const isManager = this.value === 'manager';
+    function toggleDefaultManager(role) {
+        const isManager = role === 'manager';
         const defaultManagerDiv = document.querySelector('.defaultmanager');
 
         if (isManager) {
-            defaultManagerDiv.classList.add('d-none'); 
+            defaultManagerDiv.classList.add('d-none');
         } else {
             defaultManagerDiv.classList.remove('d-none');
         }
-    });
+    }
 
 
     $('.save').on('click', function () {
         var formData = $('form').serialize();
-        console.log(formData);
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             url: '{{ route('mandalwiseuser.store') }}',
-            type: 'POST',
+            type: 'Post',
             data: formData,
             success: function (response) {
-                $("#mandalmodal").hide();
+                console.log(response)
+                $(".members").remove();
+                response.forEach(function (value) {
+                    var display = `<div class="col-lg-2 col-md-3 col-sm- mb-3 members">
+                                                <div class="card profile-card shadow-lg">
+                                                    <div class="card-body text-center">
+                                                        <div class="position-relative">
+                                                            <img class="rounded-circle" src="{{ asset('imageuploaded/${value.image}') }}" alt="Profile Image" width="70" height="70" />
+                                                        </div>
+                                                        <p class="mt-4 font-weight-bold" style="font-size: 20px;">${value.name}</p>
+                                                        <p class="text-muted">${value.role}</p>
+                                                        <p class="text-muted"><b>Mobile:</b> ${value.mobile}</p>
+                                                    </div>
+                                                </div>
+                                            </div> `;
+                    $('.memberlist').append(display);
+                });
+                $('#mandalmodal').modal('hide');
             },
             error: function (xhr, status, error) {
                 let errorMessage = `<strong>Error:</strong><ul>`;
@@ -231,14 +248,18 @@
                                 errorMessage += `<li>${message}</li>`;
                             });
                         }
+                    } else if (response.message) {
+                        errorMessage += `<li>${response.message}</li>`;
                     } else {
-                        errorMessage += `<li>${response.message || xhr.responseText}</li>`;
+                        errorMessage += `<li>${xhr.responseText}</li>`;
                     }
                 } catch (e) {
                     errorMessage += `<li>${xhr.responseText}</li>`;
                 }
+
                 errorMessage += `</ul>`;
                 $('#error').html(errorMessage).fadeIn();
+                console.log(xhr.responseText);
             }
         });
     });

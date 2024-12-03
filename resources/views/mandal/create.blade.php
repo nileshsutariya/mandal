@@ -55,8 +55,7 @@
                                 <label class="col-sm-4 col-form-label">Interest Rate</label>
                                 <div class="col-sm-8">
                                     <input type="interest_rate" class="form-control" name="interest_rate"
-                                        placeholder="Enter Interest Rate"
-                                        oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');">
+                                        placeholder="Enter Interest Rate">
                                 </div>
                             </div>
                         </div>
@@ -89,4 +88,5 @@
         </div>
     </div>
 </div>
+
 @include('layouts.footer')

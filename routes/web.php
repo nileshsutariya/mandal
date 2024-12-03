@@ -15,6 +15,7 @@ Route::get('/register', [UserController::class, 'signup'])->name('register');
 Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
 Route::middleware(['users'])->group(function () {
     Route::get('/dashboard', [LoginController::class, 'dashboard'])->name('dashboard');
+    Route::get('/mandaldashboard', [LoginController::class, 'mandaldashboard'])->name('mandaldashboard');
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
     Route::get('/user/profile', [UserController::class, 'edit'])->name('user.edit');

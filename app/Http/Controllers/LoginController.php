@@ -13,8 +13,8 @@ class LoginController extends Controller
 {
     public function index()
     {
-        if(Auth::check()){
-            return redirect()->route('dashboard');                
+        if (Auth::check()) {
+            return redirect()->route('dashboard');
         }
         return view('login');
     }
@@ -34,25 +34,45 @@ class LoginController extends Controller
             return back()->withInput()->withErrors(['password' => 'Wrong Password',]);
         }
     }
-    public function dashboard(){
-        $mandals=Mandal_wise_user::where('user_id', Auth::id())
-        ->leftJoin('mandal_master', 'mandal_wise_user.mandal_id', '=', 'mandal_master.id')
-        ->select('mandal_wise_user.*', 'mandal_master.*') 
-        ->get();
+    public function dashboard()
+    {
+        $mandals = Mandal_wise_user::where('user_id', Auth::id())
+            ->leftJoin('mandal_master', 'mandal_wise_user.mandal_id', '=', 'mandal_master.id')
+            ->select('mandal_wise_user.*', 'mandal_master.*')
+            ->get();
+        $count = "";
+        foreach ($mandals as $key => $mandal) {
+            $mandalcount = Mandal_wise_user::where('mandal_id', $mandal->id)
+                ->leftJoin('users', 'mandal_wise_user.user_id', '=', 'users.id')
+                ->select('mandal_wise_user.*', 'users.*')
+                ->get();
+            $count[$key] = $mandalcount->count();
+        }
         $user = Auth::user();
 
-        return view('dashboard',compact('mandals','user'));
+        return view('dashboard', compact('mandals', 'user', 'count'));
     }
-    public function logout(){
+    public function logout()
+    {
         Auth::logout();
         return redirect()->route('login');
     }
 
-    public function switchaccount(Request $request){
-        $id=$request->id;
+    public function switchaccount(Request $request)
+    {
         $mandal = Mandal_master::find($request->id);
-        return view('mandaldashboard',compact('mandal'));
-
+        $mandals = Mandal_wise_user::where('user_id', Auth::id())
+            ->leftJoin('mandal_master', 'mandal_wise_user.mandal_id', '=', 'mandal_master.id')
+            ->select('mandal_wise_user.*', 'mandal_master.*')
+            ->get();
+        $member = Mandal_wise_user::where('mandal_id', $request->id)
+            ->leftJoin('users', 'mandal_wise_user.user_id', '=', 'users.id')
+            ->select('mandal_wise_user.*', 'users.*')
+            ->get()
+            ->sortBy(function ($user) {
+                return $user->user_role === 'manager' ? 0 : 1;
+            });
+        return view('mandaldashboard', compact('mandals', 'mandal', 'member'));
     }
 }
 
