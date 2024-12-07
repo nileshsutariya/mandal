@@ -577,7 +577,7 @@ form .form-group {
 }
 
 .danger-bg {
-  background: #f75d81;
+  background:#f75d81;
 }
 
 .theme-bg {
@@ -1105,7 +1105,7 @@ form .form-group {
 
 .top-menu .message-item .chat-content .message-title {
   margin: 0;
-  font-size: 13px;
+  font-size: 20px;
   font-weight: 600;
   color: #2a2a2a;
 }
@@ -3767,7 +3767,7 @@ textarea.form-control {
 .mail-item-nav .nav-pills .nav-link .info .date {
   right: 15px;
   position: absolute;
-  top: 20px;
+  top: 38px;
   color: #686c71;
   font-size: 11px;
   line-height: 1;

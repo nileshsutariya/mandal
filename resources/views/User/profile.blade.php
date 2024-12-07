@@ -17,7 +17,7 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-4">
+    <div class="col-lg-4 col-md-4 col-sm-4">
         <div class="profile-left-content">
             <div class="card mb-30">
                 <div class="card-body">
@@ -44,7 +44,7 @@
         </div>
     </div>
 
-    <div class="col-lg-8">
+    <div class="col-lg-8 col-md-8 col-sm-8">
         <div class="profile-settings-form mb-30">
             @if($errors->any())
                 <div class="alert alert-danger">
@@ -152,7 +152,6 @@
         document.getElementById('imageInput').click();
     });
 
-    // Display the selected file name
     function showFileName() {
         const fileInput = document.getElementById('imageInput');
         const fileName = fileInput.files.length > 0 ? fileInput.files[0].name : 'No file selected';

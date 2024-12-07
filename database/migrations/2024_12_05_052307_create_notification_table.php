@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mandal_wise_user', function (Blueprint $table) {
+        Schema::create('notification', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('mandal_id')->nullable();
             $table->foreign('mandal_id')->references('id')->on('mandal_master')->onDelete('cascade');
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('receiver_id')->nullable();
+            $table->foreign('receiver_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('sender_id')->nullable();
+            $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('user_role');
             $table->boolean('default_manager')->default(0)->comment('0 is Deactive , 1 is Active');
             $table->timestamps();
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mandal_wise_user');
+        Schema::dropIfExists('notification');
     }
 };

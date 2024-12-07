@@ -2,7 +2,6 @@
 <style>
     .card {
         transition: transform 0.3s;
-
     }
 
     .card:hover {

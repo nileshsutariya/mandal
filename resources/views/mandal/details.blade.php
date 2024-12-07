@@ -39,13 +39,9 @@
                         <h5 class="card-title">Mandal Details</h5>
                     </div>
                     <div>
-                        <p class="font-weight-bold">Tenert :</p>
-                        <p>
+                        <span class="font-weight-bold">Tenert :</span>
                             {{$mandal->tenert}}
-                        </p>
                     </div>
-                    <p>
-                    </p>
                 </div>
             </div>
         </div>
@@ -126,11 +122,9 @@
     </div>
 </div>
 
-
-<div class="modal fade" id="mandalmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle"
-    aria-hidden="true">
+<div class="modal fade" id="mandalmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle">
     <div class="modal-dialog modal-dialog-scrollable" role="document">
-        <div class="modal-content">
+        <div class="modal-content" style="border-radius: 15px;">
             <div class="modal-header">
                 <h5 class="modal-title">Add New Member</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -142,7 +136,6 @@
                 <div id="error" class="alert alert-danger mt-3" role="alert" style="display: none;"></div>
 
                 <form>
-                    <!-- #region -->
                     <input type="hidden" value="{{$mandal->id}}" name="mandalid">
                     <div class="row">
                         <div class="col-md">
@@ -208,61 +201,71 @@
     }
 
 
-    $('.save').on('click', function () {
-        var formData = $('form').serialize();
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            url: '{{ route('mandalwiseuser.store') }}',
-            type: 'Post',
-            data: formData,
-            success: function (response) {
-                console.log(response)
-                $(".members").remove();
-                response.forEach(function (value) {
-                    var display = `<div class="col-lg-2 col-md-3 col-sm- mb-3 members">
-                                                <div class="card profile-card shadow-lg">
-                                                    <div class="card-body text-center">
-                                                        <div class="position-relative">
-                                                            <img class="rounded-circle" src="{{ asset('imageuploaded/${value.image}') }}" alt="Profile Image" width="70" height="70" />
-                                                        </div>
-                                                        <p class="mt-4 font-weight-bold" style="font-size: 20px;">${value.name}</p>
-                                                        <p class="text-muted">${value.role}</p>
-                                                        <p class="text-muted"><b>Mobile:</b> ${value.mobile}</p>
-                                                    </div>
-                                                </div>
-                                            </div> `;
-                    $('.memberlist').append(display);
-                });
-                $('#mandalmodal').modal('hide');
-            },
-            error: function (xhr, status, error) {
-                let errorMessage = `<strong>Error:</strong><ul>`;
+    $(document).on('click', '.save', function () {
+            Swal.fire({
+                title: "Confirmation",
+                text: "Are you sure you want to send this request ?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: "Yes, add it !",
+                cancelButtonText: "No, cancel !",
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    addRecord();
+                }
+            });
+        });
+     
+        function addRecord() {
+            var formData = $('form').serialize();
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '{{ route('notification.send') }}',
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    // console.log(response)    
+                    $('#mandalmodal').modal('hide');
+                    Swal.fire({
+                        title: "Success!",
+                        text: response.message,
+                        icon: "success",
+                        timer: 1500, 
+                        showConfirmButton: false 
+                    });                    
+                     // setTimeout(function () {
+                    //     location.reload();
+                    // }, 2000);
+                },
+                error: function (xhr, status, error) {
+                    let errorMessage = `<strong>Error:</strong><ul>`;
 
-                try {
-                    const response = JSON.parse(xhr.responseText);
-                    if (response.errors && typeof response.errors === 'object') {
-                        for (const [field, messages] of Object.entries(response.errors)) {
-                            messages.forEach((message) => {
-                                errorMessage += `<li>${message}</li>`;
-                            });
+                    try {
+                        const response = JSON.parse(xhr.responseText);
+                        if (response.errors && typeof response.errors === 'object') {
+                            for (const [field, messages] of Object.entries(response.errors)) {
+                                messages.forEach((message) => {
+                                    errorMessage += `<li>${message}</li>`;
+                                });
+                            }
+                        } else if (response.message) {
+                            errorMessage += `<li>${response.message}</li>`;
+                        } else {
+                            errorMessage += `<li>${xhr.responseText}</li>`;
                         }
-                    } else if (response.message) {
-                        errorMessage += `<li>${response.message}</li>`;
-                    } else {
+                    } catch (e) {
                         errorMessage += `<li>${xhr.responseText}</li>`;
                     }
-                } catch (e) {
-                    errorMessage += `<li>${xhr.responseText}</li>`;
-                }
 
-                errorMessage += `</ul>`;
-                $('#error').html(errorMessage).fadeIn();
-                console.log(xhr.responseText);
-            }
-        });
-    });
+                    errorMessage += `</ul>`;
+                    $('#error').html(errorMessage).fadeIn();
+                    console.log(xhr.responseText);
+                }
+            });
+        }
 </script>
 
 @include('layouts.footer')

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Models\Mandal_master;
 use App\Models\Mandal_wise_user;
@@ -72,7 +73,11 @@ class LoginController extends Controller
             ->sortBy(function ($user) {
                 return $user->user_role === 'manager' ? 0 : 1;
             });
-        return view('mandaldashboard', compact('mandals', 'mandal', 'member'));
+        $memberUserIds = $member->pluck('user_id');
+        $user = User::whereNotIn('id', $memberUserIds)->get();
+        $role = $member->firstWhere('user_id', Auth::id());
+  
+        return view('mandaldashboard', compact('mandals', 'mandal', 'member', 'role', 'user'));
     }
 }
 
