@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Notification extends Model
+class Mandal_Request extends Model
 {
-    protected $table = 'notification';
+    protected $table = 'mandal_request';
 
 }

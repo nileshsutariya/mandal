@@ -80,6 +80,7 @@ class UserController extends Controller
         $user->status = 1;
         $user->save();
         $url = $request->url();
+            
         return redirect()->route('user.edit');
     }
 

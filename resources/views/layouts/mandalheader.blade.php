@@ -27,20 +27,26 @@
     <!-- <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}"> -->
     <title>Mandal Management System</title>
     <style>
-         .cancel-icon {
-            position: absolute;
-            top: 11px;
-            right: 5px;
-            cursor: pointer;
-            font-size: 25px; 
-            color: #ff0000; 
-            font-weight: bold;
-            z-index: 5; 
-            transition: color 0.3s ease;
+        .top-menu .message-item .chat-content .message-title {
+            font-size: 15px;
         }
-
-        .cancel-icon:hover {
-            transform: scale(1.25);
+        .decline,
+        .accept {
+            padding: 10px 37px;
+            /* border-radius: 40px; */
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+        .top-menu .message-item .user-pic .profile-status {
+            position: absolute;
+            height: 10px;
+            width: 10px;
+            border-radius: 50%;
+            right: 2px;
+            bottom: 4px;
+        }
+        .decline:hover,
+        .accept:hover {
+            transform: scale(1.05);
         }
     </style>
 </head>
@@ -93,28 +99,35 @@
                         </div>
                     </a>
 
-                    <div class="dropdown-menu">
-                        @if (isset($notification))
-                            @foreach ($notification as $value)
-                                <a class="dropdown-item" href="#">
+                    <div class="dropdown-menu" style="overflow-y: auto; max-height: 600px;">
+                    @if (isset($request) && count($request) > 0)
+                            @foreach ($request as $value)
+                                <a class="dropdown-item" href="javascript:void(0);">
                                     <div class="message-item">
                                         <div class="user-pic">
-                                            <img src="{{asset('imageuploaded/' . $value->logo)}}" alt="User Image"
-                                                class="rounded-circle">
+                                            <img src="{{asset('imageuploaded/' . $value->image)}}" alt="User Image"
+                                                class="rounded-circle" style="width: 60px; height: 60px;">
                                             <span class="profile-status online"></span>
                                         </div>
-                                        <div class="chat-content">
-                                            <span class="message-title">{{$value->mandal_name}}</span>
-                                            <span class="mail-desc">{{$value->sender_name}}</span>
+                                        <div class="chat-content ml-4">
+                                            <span class="message-title"><b>{{$value->sender_name}}</b> invite you to join {{$value->mandal_name}}</span>
                                         </div>
+                                        <div class="ml-4">
                                             <span class="time">{{ \Carbon\Carbon::parse($value->created_at)->diffForHumans() }}</span>
-                                            <span class="cancel-icon text-muted" onclick="removeNotification({{ $value->id }})">&times;</span>
+                                            <div class="col-12 mx-auto mt-2">
+                                                <button type="button" data-val="accept" id="notification" class="btn btn-primary accept" value="{{ $value->id }}">Accept</button>
+                                                <button type="button" data-val="decline" id="notification" class="btn btn-secondary text-light decline ml-2" value="{{ $value->id }}">Decline</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </a>
                             @endforeach
-                            <a class="dropdown-item" href="{{route('user.notification')}}">
+                            <!-- <a class="dropdown-item" href="{{route('user.notification')}}">
                                 Check all notifications
                                 <i data-feather="chevron-right" class="icon"></i>
+                            </a> -->
+                            @else
+                              <a class="dropdown-item" href="#">
                             </a>
                         @endif
                     </div>
@@ -143,7 +156,7 @@
                         </a>
                         @endif
                         @endforeach
-                        @if (isset($mandals)==0)
+                        @if (isset($mandals))
                         <hr>
                         @endif
 
@@ -179,5 +192,26 @@
         </div>
     </nav>
 </div>
+<script>
+    
+    $(document).on('click', '#notification', function () {
+        var id = $(this).val();
+        var data = $(this).data('val'); 
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: "{{ route('store.request') }}",
+            data: {
+                'id': id,
+                'data':data,
+            },
+            type: 'GET',
+            success: function (response) {
+                location.reload();
+            }
+        });
+    });
+</script>
 <!-- End Side Menu -->
 <div class="main-content d-flex flex-column hide-sidemenu">

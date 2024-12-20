@@ -38,17 +38,15 @@ class MandalController extends Controller
         $image->move($imagepath, $imagename);
 
         $mandal->logo = $imagename;
-        // $mandaluser->mandal_id = $request->id;
-
         $mandal->unique_code = strtoupper(substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 4)) . rand(1000, 9999);
         $mandal->status = 1;
         $mandal->save();
 
         $mandaluser=new Mandal_wise_user;
-        $mandaluser->user_id = Auth::id();
-        $mandaluser->mandal_id = $mandal->id;
-        $mandaluser->user_role = 'manager';
-        $mandaluser->default_manager = 0;
+        $mandaluser->user_id=Auth::id();
+        $mandaluser->mandal_id=$mandal->id;
+        $mandaluser->user_role='manager';
+        $mandaluser->default_manager=0;
         $mandaluser->save();
 
         // $mandaluser->mandal_id = $request->id;
@@ -89,7 +87,9 @@ class MandalController extends Controller
         $user = User::whereNotIn('id', $memberUserIds)->get();
         $role = $member->firstWhere('user_id', Auth::id()); 
         // print_r($role);die;
+        
         return view('mandal.details', compact('mandal', 'member', 'user','role'));
+
         // }
 
     }

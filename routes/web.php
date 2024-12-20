@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MandalController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\MandalRequestController;
 use App\Http\Controllers\MandalWiseUserController;
 
 Route::get('/', function () {
@@ -15,6 +16,7 @@ Route::post('/login-check', [LoginController::class, 'login'])->name('login.chec
 Route::get('/register', [UserController::class, 'signup'])->name('register');
 Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
 Route::middleware(['users'])->group(function () {
+    Route::get('/switchaccount', [LoginController::class, 'switchaccount'])->name('switchaccount');
     Route::get('/dashboard', [LoginController::class, 'dashboard'])->name('dashboard');
     Route::get('/mandaldashboard', [LoginController::class, 'mandaldashboard'])->name('mandaldashboard');
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -28,6 +30,9 @@ Route::middleware(['users'])->group(function () {
     Route::post('/mandal/store', [MandalController::class, 'store'])->name('mandal.store');
 
     Route::post('/mandalwiseuser/store', [MandalWiseUserController::class, 'store'])->name('mandalwiseuser.store');
-    Route::post('/notification/send', [NotificationController::class, 'store'])->name('notification.send');
-    Route::get('/switchaccount', [LoginController::class, 'switchaccount'])->name('switchaccount');
+
+    Route::get('/memberlist', [MandalRequestController::class, 'memberlist'])->name('memberlist');
+    Route::get('/request/send', [MandalRequestController::class, 'sendrequest'])->name('send.request');
+    Route::get('/request/store', [MandalRequestController::class, 'store'])->name('store.request');
+
 });

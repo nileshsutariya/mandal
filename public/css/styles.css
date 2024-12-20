@@ -1106,7 +1106,7 @@ form .form-group {
 .top-menu .message-item .chat-content .message-title {
   margin: 0;
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 400;
   color: #2a2a2a;
 }
 
@@ -5423,24 +5423,6 @@ textarea.form-control {
 .timeline .timeline-list p {
   margin: 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

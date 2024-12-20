@@ -48,9 +48,10 @@ class LoginController extends Controller
                 ->select('mandal_wise_user.*', 'users.*')
                 ->get();
             $count[$key] = $mandalcount->count();
+            // print_r($count[$key]);
+            // print_r('<br>');
         }
         $user = Auth::user();
-
         return view('dashboard', compact('mandals', 'user', 'count'));
     }
     public function logout()
@@ -73,11 +74,13 @@ class LoginController extends Controller
             ->sortBy(function ($user) {
                 return $user->user_role === 'manager' ? 0 : 1;
             });
+        $membercount = $member->count();
+        // print_r($member);die;
         $memberUserIds = $member->pluck('user_id');
         $user = User::whereNotIn('id', $memberUserIds)->get();
         $role = $member->firstWhere('user_id', Auth::id());
-  
-        return view('mandaldashboard', compact('mandals', 'mandal', 'member', 'role', 'user'));
+
+        return view('mandaldashboard', compact('mandals', 'mandal', 'member', 'role', 'user', 'membercount'));
     }
 }
 
